@@ -1,5 +1,5 @@
 # Build the manager binary
-FROM golang:1.12.5 as builder
+FROM golang:1.16 as builder
 
 WORKDIR /workspace
 # Copy the go source
@@ -10,8 +10,8 @@ COPY controllers/ controllers/
 COPY go.mod go.mod
 COPY go.sum go.sum
 # add proxy for building behind firewall
-ENV http_proxy=http://www-proxy.au.oracle.com:80
-ENV https_proxy=http://www-proxy.au.oracle.com:80
+#ENV http_proxy=http://<proxy-server>:80
+#ENV https_proxy=http://<proxy-server>:80
 
 
 # Build

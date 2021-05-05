@@ -1,5 +1,5 @@
 # Apexords-Operator in Kubernetes
-This is operator to automate Apex [Oracle Application Express](https://apex.oracle.com) 19.1 and Ords [oracle rest data service](https://www.oracle.com/tools/technologies/faq-rest-data-services.html) via kubernetes [CRD](https://kubernetes.io/docs/concepts/extend-kubernetes/api-extension/custom-resources/) ,it creates a brand new Oracle 19c database statefulset,apex, ords  deployment plus load balancer in the kubernetes cluster.  This operator is using [kubebuilder](https://github.com/kubernetes-sigs/kubebuilder) to create a framework
+This is operator to automate Apex [Oracle Application Express](https://apex.oracle.com) 19.1 and Ords [oracle rest data service](https://www.oracle.com/tools/technologies/faq-rest-data-services.html) via kubernetes [CRD](https://kubernetes.io/docs/concepts/extend-kubernetes/api-extension/custom-resources/) ,it creates a brand new Oracle 19c database statefulset,apex, ords  deployment plus load balancer in the kubernetes cluster.  This operator is using [kubebuilder](https://github.com/kubernetes-sigs/kubebuilder) to create a framework. Tested in aws EKS.
 
 ## Preparation
 * check kubectl cluster-info  is working properly 
@@ -34,7 +34,8 @@ EOF
 * kubectl get apexords
 
 ## How to test in remote kubernetes cluster
-* make docker-build docker-push IMG="some-registry"/apexords-controller  
+* make docker-build 
+* make docker-push IMG="some-registry"/apexords-controller  
 * Modify image locations on yaml files under config/default/
 * make deploy
 * run below cmd
@@ -57,9 +58,18 @@ EOF
 * kubectl logs -f controller-pod-name  -n apexords-operator-system
   * see controller logs of what happened include password infor
 * kubectl get apexords
+
+## How to login Apex instance
+* kubectl get svc
+  * find nodeport or Loadbalancer IP or DNS details
+  * open browser to access 
+  * workspace: internal 
+  * username: admin
+  * password: find it in controller logs output
+
 ## Clean up
 * kubectl delete apexords  the-apexords-name
   * As we put owner reference for apexords , it will delete all related statefulesets, deployments,loadbalancer,configmap....etc
   * PV will not be deleted,thus Data won't be lost
- ## Demo:
- ![Demo!](https://i.imgur.com/PGK09FT.gif)
+ ## YouTube Demo:
+ [![YouTube Demo](https://img.youtube.com/vi/bebUj6TNtuY/0.jpg)](https://www.youtube.com/watch?v=bebUj6TNtuY)
