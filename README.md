@@ -1,5 +1,5 @@
 # Apexords-Operator in Kubernetes
-This is operator to automate Apex [Oracle Application Express](https://apex.oracle.com) 19.1 and Ords [oracle rest data service](https://www.oracle.com/tools/technologies/faq-rest-data-services.html) via kubernetes [CRD](https://kubernetes.io/docs/concepts/extend-kubernetes/api-extension/custom-resources/) ,it creates a brand new Oracle 19c database statefulset,apex, ords  deployment plus load balancer in the kubernetes cluster.  This operator is using [kubebuilder](https://github.com/kubernetes-sigs/kubebuilder) to create a framework. Tested in aws EKS.
+This is operator to automate Apex [Oracle Application Express](https://apex.oracle.com) 19.1 and Ords [oracle rest data service](https://www.oracle.com/tools/technologies/faq-rest-data-services.html) via kubernetes [CRD](https://kubernetes.io/docs/concepts/extend-kubernetes/api-extension/custom-resources/) ,it creates a brand new Oracle 19c database statefulset,apex, ords  deployment plus load balancer in the kubernetes cluster.  This operator is using [kubebuilder](https://github.com/kubernetes-sigs/kubebuilder) to create a framework. Tested in KIND and AWS EKS. It has upgraded with kubebuilder v3.1 controller-runtime v0.9.2 Golang 1.16.5
 
 ## Preparation
 * check kubectl cluster-info  is working properly 
@@ -19,7 +19,7 @@ This is operator to automate Apex [Oracle Application Express](https://apex.orac
 * run below cmd
 ```
 cat <<EOF | kubectl apply -f -
-apiVersion: theapexords.apexords-operator/v1
+apiVersion: operator.apexords-operator/v1
 kind: ApexOrds
 metadata:
  name: apexords-apexdevords
@@ -41,7 +41,7 @@ EOF
 * run below cmd
 ```
 cat <<EOF | kubectl apply -f -
-apiVersion: theapexords.apexords-operator/v1
+apiVersion: operator.apexords-operator/v1
 kind: ApexOrds
 metadata:
  name: apexords-apexdevords
@@ -70,6 +70,6 @@ EOF
 ## Clean up
 * kubectl delete apexords  the-apexords-name
   * As we put owner reference for apexords , it will delete all related statefulesets, deployments,loadbalancer,configmap....etc
-  * PV will not be deleted,thus Data won't be lost
+  * PV will not be deleted,thus Data won't be lost.
  ## YouTube Demo:
  [![YouTube Demo](https://img.youtube.com/vi/bebUj6TNtuY/0.jpg)](https://www.youtube.com/watch?v=bebUj6TNtuY)
